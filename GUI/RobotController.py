@@ -1,4 +1,5 @@
 from Maestro import Controller
+from time import sleep
 
 class RobotController:
     def __init__(self):
@@ -10,23 +11,24 @@ class RobotController:
         self.head_vert = 3
         self.head_hor = 4
 
-        self.controller.setTarget(self.motor_1, 6000)
-        self.controller.setTarget(self.motor_2, 6000)
-
         self.low_range = 4000
         self.high_range = 5000
+        self.kill = 6000
+
+        #must kill motors before starting
+        self.controller.setTarget(self.motor_move, self.kill)
+        self.controller.setTarget(self.motor_turn, self.kill)
 
     def turn_body(self, pos):
         self.controller.setTarget(self.body, pos)
 
-    def head_vertical(self, pos):
-        self.controller.setTarget(self.head_vert, pos)
+    def turn_head(self, pin, pos):
+        self.controller.setTarget(pin, pos)
 
-    def head_horizontal(self, pos):
-        self.controller.setTarget(self.head_hor, pos)
+    def move_motors(self, pin, direction, time, speed=1):
+        for i in range(direction*self.low_range, direction*self.high_range, direction) #TODO: Implement speed
+            self.controller.setTarget(pin, i)
 
-    def move_motors(self, dir, dist, speed=1):
-        self.controller.setTarget(self.motor_1, dir) #TODO: Implement movement
+        sleep(time)
 
-    def turn_motors(self, dir, degrees, speed=1):
-        self.controller.setTarget(self.motor_2, dir) #TODO: Implement turning
+        self.controller.setTarget(pin, self.kill)
