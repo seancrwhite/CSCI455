@@ -7,8 +7,9 @@ import time
 class MainWindow:
     def __init__(self, root):
         self.root = root
-        self.width = 700
+        self.width = 800
         self.height = 500
+        self.boxes = [0]
         self.root.title("Main")
         self.commands = []
 
@@ -19,7 +20,7 @@ class MainWindow:
         self.label = tk.Label(self.root,
                               text="Robot Controller: Sean White & Kaitlyn Icopini")
         self.label.configure(background="light blue")
-        self.label.place(x=200, y=20)
+        self.label.place(x=300, y=20)
 
         self.btn_head = tk.Button(self.root, text="Head",
                                   width=5, height=3, command=self.on_head_btn_click)
@@ -48,7 +49,9 @@ class MainWindow:
 
         self.btn_close = tk.Button(self.root, text="Close",
                                    width=5, command=self.root.quit)
-        self.btn_close.place(x=600, y=450)
+        self.btn_close.place(x=self.width-100, y=450)
+
+
 
     def on_body_btn_click(self):
         def save():
@@ -65,6 +68,8 @@ class MainWindow:
 
             cmd = BodyCommand(args)
             self.commands.append(cmd)
+            self.boxes.append(self.boxes[-1]+90)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="yellow", width=0)
 
             window.destroy()
 
@@ -99,6 +104,9 @@ class MainWindow:
 
             self.commands.append(cmd_h)
             self.commands.append(cmd_v)
+
+            self.boxes.append(self.boxes[-1]+90)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="purple", width=0)
 
             window.destroy()
 
@@ -136,6 +144,9 @@ class MainWindow:
 
             cmd = MoveCommand([pin, direction, int(box.get())])
             self.commands.append(cmd)
+
+            self.boxes.append(self.boxes[-1]+90)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="orange", width=0)
 
             window.destroy()
 
