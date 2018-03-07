@@ -22,10 +22,12 @@ class RobotController:
     def turn_body(self, pos):
         #self.controller.setTarget(self.body, pos)
         print("Body: ", pos)
+        sleep(1)
 
     def turn_head(self, pin, pos):
         #self.controller.setTarget(pin, pos)
         print("Head: ", pin, pos)
+        sleep(1)
 
     def move_motors(self, pin, direction, time, speed=1):
         for i in range(direction*self.low_range, direction*self.high_range, direction): #TODO: Implement speed

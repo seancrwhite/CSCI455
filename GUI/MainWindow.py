@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter.font import Font
 from Command import *
 from threading import Thread
+import time
 
 class MainWindow:
     def __init__(self, root):
@@ -66,7 +67,7 @@ class MainWindow:
             cmd = BodyCommand(args)
             self.commands.append(cmd)
 
-            window.quit()
+            window.destroy()
 
         window = tk.Toplevel(self.root)
 
@@ -100,7 +101,7 @@ class MainWindow:
             self.commands.append(cmd_h)
             self.commands.append(cmd_v)
 
-            window.quit()
+            window.destroy()
 
         window = tk.Toplevel(self.root)
 
@@ -137,7 +138,7 @@ class MainWindow:
             cmd = MoveCommand([pin, direction, int(box.get())])
             self.commands.append(cmd)
 
-            window.quit()
+            window.destroy()
 
         window = tk.Toplevel(self.root)
 
@@ -161,11 +162,8 @@ class MainWindow:
         flash_thrd = Thread(target=self.flash())
         flash_thrd.start()
 
-        for command in self.commands:
-            if not self.stop_button_pressed:
-                command.run_command()
-            else:
-                break
+        cmd_thrd = Thread(target=self.run_commands())
+        cmd_thrd.start()
 
         self.btn_stop.config(state='disabled')
         self.btn_start.config(state='normal')
@@ -178,3 +176,13 @@ class MainWindow:
 
     def flash(self):
         self.btn_start.flash()
+        # while not self.stop_button_pressed:
+        #     self.btn_start.config(bg='gray')
+        #     self.btn_start.config(bg='green')
+
+    def run_commands(self):
+        for command in self.commands:
+            if not self.stop_button_pressed:
+                command.run_command()
+            else:
+                break

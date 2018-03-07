@@ -24,7 +24,7 @@ class MoveCommand(Command):
         direction = self.args[1]
         time = self.args[2]
 
-        self.controller.turn_body(pin, direction, time)
+        self.controller.move_motors(pin, direction, time)
 
 class KillCommand(Command):
     def run_command(self):
