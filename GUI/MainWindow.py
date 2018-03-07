@@ -10,7 +10,6 @@ class MainWindow:
         self.width = 700
         self.height = 500
         self.root.title("Main")
-        self.stop_button_pressed = False
         self.commands = []
 
         self.canvas = tk.Canvas(self.root, width=self.width, height=self.height)
@@ -42,8 +41,8 @@ class MainWindow:
         self.btn_start.configure(background="green")
         self.btn_start.place(x=10, y=450)
 
-        self.btn_stop = tk.Button(self.root, text="Stop", state='disabled',
-                                  width=5, command=self.on_stop_btn_click)
+        self.btn_stop = tk.Button(self.root, text="Clear",
+                                  width=5, command=self.on_clear_btn_click)
         self.btn_stop.configure(background="red")
         self.btn_stop.place(x=90, y=450)
 
@@ -148,7 +147,7 @@ class MainWindow:
         menu = tk.OptionMenu(window, variable, "Forward", "Left", "Right", "Reverse")
         menu.pack()
 
-        box = tk.Spinbox(window,from_=0, to=100, width=3,
+        box = tk.Spinbox(window,from_=1, to=100, width=3,
                font=Font(family='Helvetica', size=36, weight='bold'))
         box.pack()
 
@@ -156,33 +155,20 @@ class MainWindow:
         btn_save.pack()
 
     def on_start_btn_click(self):
-        self.btn_stop.config(state='normal')
-        self.btn_start.config(state='disabled')
-
         flash_thrd = Thread(target=self.flash())
         flash_thrd.start()
 
         cmd_thrd = Thread(target=self.run_commands())
         cmd_thrd.start()
 
-        self.btn_stop.config(state='disabled')
-        self.btn_start.config(state='normal')
+        self.commands = []
 
-    def on_stop_btn_click(self):
-        self.stop_button_pressed = True
-
-        cmd = KillCommand([])
-        cmd.run_command()
+    def on_clear_btn_click(self):
+        self.commands = []
 
     def flash(self):
         self.btn_start.flash()
-        # while not self.stop_button_pressed:
-        #     self.btn_start.config(bg='gray')
-        #     self.btn_start.config(bg='green')
 
     def run_commands(self):
         for command in self.commands:
-            if not self.stop_button_pressed:
-                command.run_command()
-            else:
-                break
+            command.run_command()
