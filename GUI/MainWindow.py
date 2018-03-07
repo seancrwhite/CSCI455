@@ -43,7 +43,7 @@ class MainWindow:
         self.btn_start.place(x=10, y=450)
 
         self.btn_stop = tk.Button(self.root, text="Clear",
-                                  width=5, command=self.on_clear_btn_click)
+                                  width=5, command=self.clear)
         self.btn_stop.configure(background="red")
         self.btn_stop.place(x=90, y=450)
 
@@ -166,20 +166,17 @@ class MainWindow:
         btn_save.pack()
 
     def on_start_btn_click(self):
-        flash_thrd = Thread(target=self.flash())
-        flash_thrd.start()
-
         cmd_thrd = Thread(target=self.run_commands())
         cmd_thrd.start()
 
-        self.commands = []
+        self.clear()
 
-    def on_clear_btn_click(self):
+    def clear(self):
         self.commands = []
-
-    def flash(self):
-        self.btn_start.flash()
+        self.boxes = [0]
+        self.canvas.create_rectangle(90, 130, 800, 331, fill="light blue", width=0)
 
     def run_commands(self):
         for command in self.commands:
+            self.btn_start.flash()
             command.run_command()

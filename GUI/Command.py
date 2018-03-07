@@ -25,7 +25,3 @@ class MoveCommand(Command):
         time = self.args[2]
 
         self.controller.move_motors(pin, direction, time)
-
-class KillCommand(Command):
-    def run_command(self):
-        self.controller.kill_all()
