@@ -1,5 +1,6 @@
 from tkinter import Label, Button
 
+
 class MainWindow:
     def __init__(self, root):
         self.root = root
