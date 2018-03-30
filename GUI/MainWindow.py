@@ -18,40 +18,52 @@ class MainWindow:
         self.canvas.configure(background='light blue')
         self.canvas.pack()
 
-        self.label = tk.Label(self.root,
+        #Title--------------------------------------------------------------------
+        self.label = tk.Label(self.root, font=("Arial", 18),
                               text="Robot Controller: Sean White & Kaitlyn Icopini")
         self.label.configure(background="light blue")
         self.label.place(x=300, y=20)
 
+        #Head---------------------------------------------------------------------
         self.btn_head = tk.Button(self.root, text="Head",
                                   width=5, height=3, command=self.on_head_btn_click)
         self.btn_head.configure(background="purple")
         self.btn_head.place(x=10, y=50)
 
+        #Body---------------------------------------------------------------------
         self.btn_body = tk.Button(self.root, text="Body",
                                   width=5, height=3, command=self.on_body_btn_click)
         self.btn_body.configure(background="yellow")
         self.btn_body.place(x=10, y=110)
 
+        #Move---------------------------------------------------------------------
         self.btn_move = tk.Button(self.root, text="Move",
                                   width=5, height=3, command=self.on_move_btn_click)
         self.btn_move.configure(background="orange")
         self.btn_move.place(x=10, y=170)
 
+        #Talk---------------------------------------------------------------------
+        self.btn_talk = tk.Button(self.root, text="Talk",
+                                  width=5, height=3, command=self.on_talk_btn_click)
+        self.btn_talk.configure(background="deep sky blue")
+        self.btn_talk.place(x=10, y=230)
+
+        #Start--------------------------------------------------------------------
         self.btn_start = tk.Button(self.root, text="Start",
                                    width=5, command=self.on_start_btn_click)
         self.btn_start.configure(background="green")
         self.btn_start.place(x=10, y=450)
 
+        #Stop/Clear---------------------------------------------------------------------
         self.btn_stop = tk.Button(self.root, text="Clear",
                                   width=5, command=self.clear)
         self.btn_stop.configure(background="red")
         self.btn_stop.place(x=90, y=450)
 
+        #Close--------------------------------------------------------------------
         self.btn_close = tk.Button(self.root, text="Close",
                                    width=5, command=self.root.quit)
         self.btn_close.place(x=self.width-100, y=450)
-
 
 
     def on_body_btn_click(self):
@@ -60,9 +72,9 @@ class MainWindow:
             pos = 6000
 
             # Suck it, String.equals()
-            if variable == "Left":
+            if variable.get() == "Left":
                 pos = 8000
-            elif variable == "Right":
+            elif variable.get() == "Right":
                 pos = 4000
 
             args.append(pos)
@@ -90,14 +102,14 @@ class MainWindow:
             pos_h = 6000
             pos_v = 6000
 
-            if variable_hor == "Left":
+            if variable_hor.get() == "Left":
                 pos_h = 8000
-            elif variable_hor == "Right":
+            elif variable_hor.get() == "Right":
                 pos = 4000
 
-            if variable_ver == "Up":
+            if variable_ver.get() == "Up":
                 pos_v = 8000
-            elif variable_hor == "Down":
+            elif variable_ver.get() == "Down":
                 pos_v = 4000
 
             cmd_h = HeadCommand([4, pos_h])
@@ -133,13 +145,13 @@ class MainWindow:
             pin = 1
             direction = 1
 
-            if variable == "Reverse":
+            if variable.get() == "Reverse":
                 pin = 1
                 direction = -1
-            elif variable == "Left":
+            elif variable.get() == "Left":
                 pin = 2
                 direction = 1
-            elif variable == "Right":
+            elif variable.get() == "Right":
                 pin = 2
                 direction = -1
 
@@ -162,6 +174,34 @@ class MainWindow:
         box = tk.Spinbox(window,from_=1, to=100, width=3,
                font=Font(family='Helvetica', size=36, weight='bold'))
         box.pack()
+
+        btn_save = tk.Button(window, text="Save", command=save)
+        btn_save.pack()
+
+    def on_talk_btn_click(self):
+        def save():
+            args = []
+            args.append(variable.get())
+            cmd = TalkCommand(args)
+            self.commands.append(cmd)
+            self.boxes.append(self.boxes[-1]+90)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="deep sky blue", width=0)
+
+            window.destroy()
+
+        window = tk.Toplevel(self.root)
+
+        variable = tk.StringVar(self.root)
+        variable.set("I won't enjoy this.")
+
+        menu = tk.OptionMenu(window, variable,
+                            "I won't enjoy this.",
+                            "I think you ought to know, I'm feeling very depressed.",
+                            "I have a million ideas. They all point to certain death.,",
+                            "I'd give you advice, but you wouldn't listen. No one ever does.",
+                            "It gives me a headache just trying to think down to your level.",
+                            "This is the sort of thing you lifeforms enjoy, is it?")
+        menu.pack()
 
         btn_save = tk.Button(window, text="Save", command=save)
         btn_save.pack()

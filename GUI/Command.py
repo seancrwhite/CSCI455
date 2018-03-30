@@ -1,9 +1,11 @@
-from RobotController import RobotController
+#from RobotController import RobotController
+from PhoneHandler import SocketStuff
 
 class Command:
     def __init__(self, args):
-        self.controller = RobotController()
+        #self.controller = RobotController()
         self.args = args
+        self.socket = SocketStuff()
 
 class HeadCommand(Command):
     def run_command(self):
@@ -25,3 +27,9 @@ class MoveCommand(Command):
         time = self.args[2]
 
         self.controller.move_motors(pin, direction, time)
+
+class TalkCommand(Command):
+    def run_command(self):
+        phrase = self.args[0]
+        #needs to send to phone
+        self.socket.changing_phrase(phrase)
