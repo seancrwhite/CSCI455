@@ -15,53 +15,57 @@ class MainWindow:
         self.commands = []
 
         self.canvas = tk.Canvas(self.root, width=self.width, height=self.height)
-        self.canvas.configure(background='light blue')
+        self.canvas.configure(background='light cyan')
         self.canvas.pack()
 
         #Title--------------------------------------------------------------------
-        self.label = tk.Label(self.root, font=("Arial", 18),
-                              text="Robot Controller: Sean White & Kaitlyn Icopini")
-        self.label.configure(background="light blue")
-        self.label.place(x=300, y=20)
+        self.title = tk.Label(self.root, font=("Arial", 18),
+                              text="Robot Controller")
+        self.title.configure(background="light cyan")
+        self.title.place(x=320, y=20)
+
+        self.by = tk.Label(self.root, font=("Arial", 10), text="Sean White\nKaitlyn Icopini")
+        self.by.configure(background="light cyan")
+        self.by.place(x=700, y=10)
 
         #Head---------------------------------------------------------------------
-        self.btn_head = tk.Button(self.root, text="Head",
+        self.btn_head = tk.Button(self.root, font=("Arial", 12), text="Head",
                                   width=5, height=3, command=self.on_head_btn_click)
-        self.btn_head.configure(background="purple")
-        self.btn_head.place(x=10, y=50)
+        self.btn_head.configure(background="purple1")
+        self.btn_head.place(x=10, y=80)
 
         #Body---------------------------------------------------------------------
-        self.btn_body = tk.Button(self.root, text="Body",
+        self.btn_body = tk.Button(self.root, font=("Arial", 12), text="Body",
                                   width=5, height=3, command=self.on_body_btn_click)
         self.btn_body.configure(background="yellow")
-        self.btn_body.place(x=10, y=110)
+        self.btn_body.place(x=10, y=150)
 
         #Move---------------------------------------------------------------------
-        self.btn_move = tk.Button(self.root, text="Move",
+        self.btn_move = tk.Button(self.root, font=("Arial", 12), text="Move",
                                   width=5, height=3, command=self.on_move_btn_click)
         self.btn_move.configure(background="orange")
-        self.btn_move.place(x=10, y=170)
+        self.btn_move.place(x=10, y=220)
 
         #Talk---------------------------------------------------------------------
-        self.btn_talk = tk.Button(self.root, text="Talk",
+        self.btn_talk = tk.Button(self.root, font=("Arial", 12), text="Talk",
                                   width=5, height=3, command=self.on_talk_btn_click)
         self.btn_talk.configure(background="deep sky blue")
-        self.btn_talk.place(x=10, y=230)
+        self.btn_talk.place(x=10, y=290)
 
         #Start--------------------------------------------------------------------
-        self.btn_start = tk.Button(self.root, text="Start",
+        self.btn_start = tk.Button(self.root, font=("Arial", 12), text="Start",
                                    width=5, command=self.on_start_btn_click)
         self.btn_start.configure(background="green")
         self.btn_start.place(x=10, y=450)
 
         #Stop/Clear---------------------------------------------------------------------
-        self.btn_stop = tk.Button(self.root, text="Clear",
+        self.btn_stop = tk.Button(self.root, font=("Arial", 12), text="Clear",
                                   width=5, command=self.clear)
         self.btn_stop.configure(background="red")
         self.btn_stop.place(x=90, y=450)
 
         #Close--------------------------------------------------------------------
-        self.btn_close = tk.Button(self.root, text="Close",
+        self.btn_close = tk.Button(self.root, font=("Arial", 12), text="Close",
                                    width=5, command=self.root.quit)
         self.btn_close.place(x=self.width-100, y=450)
 
@@ -119,7 +123,7 @@ class MainWindow:
             self.commands.append(cmd_v)
 
             self.boxes.append(self.boxes[-1]+90)
-            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="purple", width=0)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="purple1", width=0)
 
             window.destroy()
 
@@ -215,7 +219,7 @@ class MainWindow:
     def clear(self):
         self.commands = []
         self.boxes = [0]
-        self.canvas.create_rectangle(90, 130, 800, 331, fill="light blue", width=0)
+        self.canvas.create_rectangle(90, 130, 800, 331, fill="light cyan", width=0)
 
     def run_commands(self):
         for command in self.commands:
