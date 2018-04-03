@@ -2,17 +2,19 @@ import socket
 import sys
 from threading import Thread
 
-class SocketStuff(Thread):
+class ClientThread(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = socket.gethostname()
         self.port = 5000
-        self.sock.bind((self.host, self.port))
         self.phrase = ""
         self.start()
 
     def run(self):
+        self.sock.connect((self.host, self.port))
+        print("Connection Established")
+
         while True:
             try:
                 if self.phrase is not "":
@@ -21,6 +23,7 @@ class SocketStuff(Thread):
                     self.phrase = ""
             except:
                 print('Client disconnected')
+                self.sock.close()
 
-    def changing_phrase(self, new_phrase):
+    def send(self, new_phrase):
         self.phrase = new_phrase

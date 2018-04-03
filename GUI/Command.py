@@ -1,11 +1,14 @@
 #from RobotController import RobotController
-from PhoneHandler import SocketStuff
+from PhoneHandler import *
+
+global client
+
+client = ClientThread()
 
 class Command:
     def __init__(self, args):
         #self.controller = RobotController()
         self.args = args
-        self.socket = SocketStuff()
 
 class HeadCommand(Command):
     def run_command(self):
@@ -31,5 +34,5 @@ class MoveCommand(Command):
 class TalkCommand(Command):
     def run_command(self):
         phrase = self.args[0]
-        #needs to send to phone
-        self.socket.changing_phrase(phrase)
+
+        client.send(phrase)
