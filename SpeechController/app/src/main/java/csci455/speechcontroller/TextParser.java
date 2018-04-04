@@ -37,16 +37,18 @@ class TextParser extends Thread implements TextToSpeech.OnInitListener {
                     Toast.makeText(context, "Language load error", Toast.LENGTH_LONG).show();
                 }
 
+                start();
                 break;
         }
     }
 
+    @Override
     public void run() {
         Looper.prepare();
 
         handler = new Handler() {
             public void handleMessage(Message msg) {
-                String response = msg.getData().getString("TT");
+                String response = msg.getData().getString("client");
 
                 Log.v("Response:", response);
 

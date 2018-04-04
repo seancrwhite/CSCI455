@@ -151,13 +151,13 @@ class MainWindow:
 
             if variable.get() == "Reverse":
                 pin = 1
-                direction = -1
+                direction = -1.85
             elif variable.get() == "Left":
                 pin = 2
                 direction = 1
             elif variable.get() == "Right":
                 pin = 2
-                direction = -1
+                direction = -1.85
 
             cmd = MoveCommand([pin, direction, int(box.get())])
             self.commands.append(cmd)

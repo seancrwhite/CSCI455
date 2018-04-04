@@ -1,13 +1,12 @@
-#from RobotController import RobotController
+from RobotController import RobotController
 from PhoneHandler import *
 
 global client
-
 client = ClientThread()
 
 class Command:
     def __init__(self, args):
-        #self.controller = RobotController()
+        self.controller = RobotController()
         self.args = args
 
 class HeadCommand(Command):
@@ -35,4 +34,5 @@ class TalkCommand(Command):
     def run_command(self):
         phrase = self.args[0]
 
+        global client
         client.send(phrase)
