@@ -18,7 +18,7 @@ class ClientThread(Thread):
                     print("Sent: ", self.phrase)
                     self.phrase = ""
             except:
-                print('Server disconnected')
+                #print('Client disconnected')
                 self.sock.close()
 
     def send(self, new_phrase):
@@ -37,6 +37,7 @@ class ServerThread(Thread):
                 data = self.sock.recv(2048)
                 command = str(data, 'utf-8')
                 print("Recieved: ", command)
+                self.root_window.take_voice_command(command)
             except:
-                print('Server disconnected')
+                #print('Server disconnected')
                 self.sock.close()

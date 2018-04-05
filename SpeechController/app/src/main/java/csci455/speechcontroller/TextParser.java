@@ -29,8 +29,8 @@ class TextParser extends Thread implements TextToSpeech.OnInitListener {
             case TextToSpeech.SUCCESS:
                 int result = tts.setLanguage(Locale.US);
 
-                tts.setPitch(0);         // Change pitch
-                tts.setSpeechRate(0);    // Change how fast it talks
+                tts.setPitch(0.25f);         // Change pitch
+                tts.setSpeechRate(0.75f);    // Change how fast it talks
 
                 if(result == TextToSpeech.LANG_MISSING_DATA ||
                         result == TextToSpeech.LANG_NOT_SUPPORTED) {

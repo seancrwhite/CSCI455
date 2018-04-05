@@ -228,8 +228,11 @@ class MainWindow:
 
     def take_voice_command(self, command):
         tokens = command.split(' ')
+        print("Taking Voice Command: ", tokens[0])
 
-        if tokens[0] == 'start' or tokens[0] == 'run':
-            self.run_commands()
-        if tokens[0] == 'clear':
-            self.clear()
+        if "start" in tokens[0]:
+            for command in self.commands:
+                command.run_command()
+
+            self.commands = []
+            self.boxes = [] 
