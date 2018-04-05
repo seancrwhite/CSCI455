@@ -4,9 +4,9 @@ from Command import *
 from threading import Thread
 import time
 
-
 class MainWindow:
     def __init__(self, root):
+        self.server_thread = ServerThreadIntermediary().get_server_thread(self)
         self.root = root
         self.width = 800
         self.height = 500
@@ -225,3 +225,11 @@ class MainWindow:
         for command in self.commands:
             self.btn_start.flash()
             command.run_command()
+
+    def take_voice_command(self, command):
+        tokens = command.split(' ')
+
+        if tokens[0] == 'start' or tokens[0] == 'run':
+            self.run_commands()
+        if tokens[0] == 'clear':
+            self.clear()

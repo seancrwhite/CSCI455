@@ -1,20 +1,15 @@
-import socket
 import sys
 from threading import Thread
+import Socket
 
 class ClientThread(Thread):
     def __init__(self):
         Thread.__init__(self)
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.host = "10.200.60.119"
-        self.port = 5000
+        self.sock = Socket.get_socket()
         self.phrase = ""
         self.start()
 
     def run(self):
-        self.sock.connect((self.host, self.port))
-        print("Connection Established")
-
         while True:
             try:
                 if self.phrase is not "":
@@ -30,8 +25,18 @@ class ClientThread(Thread):
         self.phrase = new_phrase
 
 class ServerThread(Thread):
-    def __init__(self):
+    def __init__(self, window):
         Thread.__init__(self)
+        self.root_window = window
+        self.sock = Socket.get_socket()
+        self.start()
 
     def run(self):
-        print("NOT IMPLEMENTED")
+        while True:
+            try:
+                data = self.sock.recv(2048)
+                command = str(data, 'utf-8')
+                print("Recieved: ", command)
+            except:
+                print('Server disconnected')
+                self.sock.close()

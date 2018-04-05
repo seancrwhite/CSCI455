@@ -5,5 +5,5 @@ if __name__ == '__main__':
     root = Tk()
 
     w_main = MainWindow(root)
-
+    
     root.mainloop()

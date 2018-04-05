@@ -1,4 +1,4 @@
-from RobotController import RobotController
+#from RobotController import RobotController
 from PhoneHandler import *
 
 global client
@@ -6,7 +6,7 @@ client = ClientThread()
 
 class Command:
     def __init__(self, args):
-        self.controller = RobotController()
+        #self.controller = RobotController()
         self.args = args
 
 class HeadCommand(Command):
@@ -36,3 +36,7 @@ class TalkCommand(Command):
 
         global client
         client.send(phrase)
+
+class ServerThreadIntermediary:
+    def get_server_thread(self, window):
+        return ServerThread(window)
