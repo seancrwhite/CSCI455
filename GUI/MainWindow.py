@@ -32,25 +32,31 @@ class MainWindow:
         self.btn_head = tk.Button(self.root, font=("Arial", 12), text="Head",
                                   width=5, height=3, command=self.on_head_btn_click)
         self.btn_head.configure(background="purple1")
-        self.btn_head.place(x=10, y=80)
+        self.btn_head.place(x=10, y=70)
 
         #Body---------------------------------------------------------------------
         self.btn_body = tk.Button(self.root, font=("Arial", 12), text="Body",
                                   width=5, height=3, command=self.on_body_btn_click)
         self.btn_body.configure(background="yellow")
-        self.btn_body.place(x=10, y=150)
+        self.btn_body.place(x=10, y=140)
 
         #Move---------------------------------------------------------------------
         self.btn_move = tk.Button(self.root, font=("Arial", 12), text="Move",
                                   width=5, height=3, command=self.on_move_btn_click)
         self.btn_move.configure(background="orange")
-        self.btn_move.place(x=10, y=220)
+        self.btn_move.place(x=10, y=210)
 
         #Talk---------------------------------------------------------------------
         self.btn_talk = tk.Button(self.root, font=("Arial", 12), text="Talk",
                                   width=5, height=3, command=self.on_talk_btn_click)
         self.btn_talk.configure(background="deep sky blue")
-        self.btn_talk.place(x=10, y=290)
+        self.btn_talk.place(x=10, y=280)
+
+        #Wait---------------------------------------------------------------------
+        self.btn_wait = tk.Button(self.root, font=("Arial", 12), text="Wait",
+                                  width=5, height=3, command=self.on_wait_btn_click)
+        self.btn_wait.configure(background="DeepPink2")
+        self.btn_wait.place(x=10, y=350)
 
         #Start--------------------------------------------------------------------
         self.btn_start = tk.Button(self.root, font=("Arial", 12), text="Start",
@@ -86,7 +92,7 @@ class MainWindow:
             cmd = BodyCommand(args)
             self.commands.append(cmd)
             self.boxes.append(self.boxes[-1]+90)
-            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="yellow", width=0)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="yellow", width=0)
 
             window.destroy()
 
@@ -123,7 +129,7 @@ class MainWindow:
             self.commands.append(cmd_v)
 
             self.boxes.append(self.boxes[-1]+90)
-            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="purple1", width=0)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="purple1", width=0)
 
             window.destroy()
 
@@ -163,7 +169,7 @@ class MainWindow:
             self.commands.append(cmd)
 
             self.boxes.append(self.boxes[-1]+90)
-            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="orange", width=0)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="orange", width=0)
 
             window.destroy()
 
@@ -189,7 +195,7 @@ class MainWindow:
             cmd = TalkCommand(args)
             self.commands.append(cmd)
             self.boxes.append(self.boxes[-1]+90)
-            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 331, fill="deep sky blue", width=0)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="deep sky blue", width=0)
 
             window.destroy()
 
@@ -210,6 +216,17 @@ class MainWindow:
         btn_save = tk.Button(window, text="Save", command=save)
         btn_save.pack()
 
+    def on_wait_btn_click(self):
+        def save():
+            args = []
+            args.append(variable.get())
+            cmd = WaitCommand(args)
+            self.commands.append(cmd)
+            self.boxes.append(self.boxes[-1]+90)
+            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="DeepPink2", width=0)
+
+            window.destroy()
+
     def on_start_btn_click(self):
         cmd_thrd = Thread(target=self.run_commands())
         cmd_thrd.start()
@@ -219,7 +236,7 @@ class MainWindow:
     def clear(self):
         self.commands = []
         self.boxes = [0]
-        self.canvas.create_rectangle(90, 130, 800, 331, fill="light cyan", width=0)
+        self.canvas.create_rectangle(90, 130, 800, 360, fill="light cyan", width=0)
 
     def run_commands(self):
         for command in self.commands:
@@ -235,4 +252,4 @@ class MainWindow:
                 command.run_command()
 
             self.commands = []
-            self.boxes = [] 
+            self.boxes = []
