@@ -53,27 +53,27 @@ class MainWindow:
         self.btn_talk.place(x=10, y=280)
 
         #Wait---------------------------------------------------------------------
-        self.btn_wait = tk.Button(self.root, font=("Arial", 12), text="Wait",
-                                  width=5, height=3, command=self.on_wait_btn_click)
-        self.btn_wait.configure(background="DeepPink2")
-        self.btn_wait.place(x=10, y=350)
+        # self.btn_wait = tk.Button(self.root, font=("Arial", 12), text="Wait",
+        #                           width=5, height=3, command=self.on_wait_btn_click)
+        # self.btn_wait.configure(background="DeepPink2")
+        # self.btn_wait.place(x=10, y=350)
 
         #Start--------------------------------------------------------------------
         self.btn_start = tk.Button(self.root, font=("Arial", 12), text="Start",
                                    width=5, command=self.on_start_btn_click)
         self.btn_start.configure(background="green")
-        self.btn_start.place(x=10, y=450)
+        self.btn_start.place(x=10, y=400)
 
         #Stop/Clear---------------------------------------------------------------------
         self.btn_stop = tk.Button(self.root, font=("Arial", 12), text="Clear",
                                   width=5, command=self.clear)
         self.btn_stop.configure(background="red")
-        self.btn_stop.place(x=90, y=450)
+        self.btn_stop.place(x=90, y=400)
 
         #Close--------------------------------------------------------------------
         self.btn_close = tk.Button(self.root, font=("Arial", 12), text="Close",
                                    width=5, command=self.root.quit)
-        self.btn_close.place(x=self.width-100, y=450)
+        self.btn_close.place(x=self.width-100, y=400)
 
 
     def on_body_btn_click(self):
@@ -216,16 +216,14 @@ class MainWindow:
         btn_save = tk.Button(window, text="Save", command=save)
         btn_save.pack()
 
-    def on_wait_btn_click(self):
-        def save():
-            args = []
-            args.append(variable.get())
-            cmd = WaitCommand(args)
-            self.commands.append(cmd)
-            self.boxes.append(self.boxes[-1]+90)
-            self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="DeepPink2", width=0)
+    # def on_wait_btn_click(self):
+    #     args = []
+    #     args.append(self.server_thread)
+    #     cmd = WaitCommand(args)
+    #     self.commands.append(cmd)
+    #     self.boxes.append(self.boxes[-1]+90)
+    #     self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="DeepPink2", width=0)
 
-            window.destroy()
 
     def on_start_btn_click(self):
         cmd_thrd = Thread(target=self.run_commands())
