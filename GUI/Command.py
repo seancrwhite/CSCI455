@@ -1,6 +1,6 @@
 from RobotController import RobotController
 from PhoneHandler import *
-#import Socket
+import Socket
 
 global client
 client = ClientThread()
