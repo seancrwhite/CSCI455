@@ -11,7 +11,7 @@ class RobotController:
         self.head_vert = 3
         self.head_hor = 4
 
-        self.low_range = 4000
+        self.low_range = 4500
         self.high_range = 5000
         self.kill = 6000
 

@@ -19,12 +19,12 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     TTS tts;
-    STT stt;
     ClientThread thread_c;
     ServerThread thread_s;
     TextView ip_addr;
 
     final int REQUEST_CODE = 10;
+    private boolean ttsIsSpeaking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tts = new TTS(this);
-        stt = new STT();
 
         thread_s = new ServerThread(this);
         thread_c = new ClientThread();
-
 
         ip_addr = findViewById(R.id.ip_addr);
         ip_addr.setText(getIpAddr());
@@ -89,6 +87,15 @@ public class MainActivity extends AppCompatActivity {
 
             tts_handler.sendMessage(out_msg);
 
+            ttsIsSpeaking = true;
+            while(ttsIsSpeaking) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
@@ -116,5 +123,9 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         return ipAddress;
+    }
+
+    public void setDoneSpeaking() {
+        ttsIsSpeaking = false;
     }
 }

@@ -16,11 +16,11 @@ import java.util.Locale;
 
 public class TTS extends Thread implements TextToSpeech.OnInitListener {
     private TextToSpeech tts;
-    private Context context;
+    private MainActivity context;
     private String last;
     private Handler handler;
 
-    public TTS(Context context) {
+    public TTS(MainActivity context) {
         this.context = context;
         tts = new TextToSpeech(context, this);
         last = "";
@@ -32,8 +32,8 @@ public class TTS extends Thread implements TextToSpeech.OnInitListener {
             case TextToSpeech.SUCCESS:
                 int result = tts.setLanguage(Locale.US);
 
-                tts.setPitch(0.25f);         // Change pitch
-                tts.setSpeechRate(0.75f);    // Change how fast it talks
+                tts.setPitch(0);         // Change pitch
+                tts.setSpeechRate(0);    // Change how fast it talks
 
                 if(result == TextToSpeech.LANG_MISSING_DATA ||
                         result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -79,6 +79,8 @@ public class TTS extends Thread implements TextToSpeech.OnInitListener {
                 e.printStackTrace();
             }
         }
+
+        context.setDoneSpeaking();
     }
 
     public void shutdown() {
