@@ -64,23 +64,22 @@ public class TTS extends Thread implements TextToSpeech.OnInitListener {
     }
 
     public void convert(String txt) {
-        if(last.equals(txt)) {
-            return;
-        }
-
-        last = txt;
-
         tts.speak(txt, TextToSpeech.QUEUE_FLUSH, null, null);
 
         while(tts.isSpeaking()) {
             try {
                 Thread.sleep(200);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
         context.setDoneSpeaking();
+    }
+
+    public boolean isSpeaking() {
+        return tts.isSpeaking();
     }
 
     public void shutdown() {
