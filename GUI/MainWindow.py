@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter.font import Font
-from Command import *
+#from Command import *
 from threading import Thread
 import time
 
 class MainWindow:
     def __init__(self, root):
-        self.server_thread = ServerThreadIntermediary().get_server_thread(self)
+        #self.server_thread = ServerThreadIntermediary().get_server_thread(self)
         self.root = root
         self.width = 800
         self.height = 500
@@ -15,17 +15,17 @@ class MainWindow:
         self.commands = []
 
         self.canvas = tk.Canvas(self.root, width=self.width, height=self.height)
-        self.canvas.configure(background='light cyan')
+        self.canvas.configure(background='slate gray')
         self.canvas.pack()
 
         #Title--------------------------------------------------------------------
         self.title = tk.Label(self.root, font=("Arial", 18),
                               text="Robot Controller")
-        self.title.configure(background="light cyan")
-        self.title.place(x=320, y=20)
+        self.title.configure(background="slate gray")
+        self.title.place(x=310, y=20)
 
         self.by = tk.Label(self.root, font=("Arial", 10), text="Sean White\nKaitlyn Icopini")
-        self.by.configure(background="light cyan")
+        self.by.configure(background="slate gray")
         self.by.place(x=700, y=10)
 
         #Head---------------------------------------------------------------------
@@ -75,17 +75,75 @@ class MainWindow:
                                    width=5, command=self.root.quit)
         self.btn_close.place(x=self.width-100, y=400)
 
+        #Map----------------------------------------------------------------------
+        self.node1 = self.canvas.create_rectangle(300, 75, 500, 175, fill="deep sky blue")
 
-    def on_body_btn_click(self):
-        def save():
-            args = []
-            pos = 6000
 
-            # Suck it, String.equals()
-            if variable.get() == "Left":
-                pos = 8000
-            elif variable.get() == "Right":
-                pos = 4000
+    # def on_talk_btn_click(self):
+    #     def save():
+    #         args = []
+    #         args.append(variable.get())
+    #         cmd = TalkCommand(args)
+    #         self.commands.append(cmd)
+    #         self.boxes.append(self.boxes[-1]+90)
+    #         self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="deep sky blue", width=0)
+    #
+    #         window.destroy()
+    #
+    #     window = tk.Toplevel(self.root)
+    #
+    #     variable = tk.StringVar(self.root)
+    #     variable.set("I won't enjoy this.")
+    #
+    #     menu = tk.OptionMenu(window, variable,
+    #                         "I won't enjoy this.",
+    #                         "I think you ought to know, I'm feeling very depressed.",
+    #                         "I have a million ideas. They all point to certain death.",
+    #                         "I'd give you advice, but you wouldn't listen. No one ever does.",
+    #                         "It gives me a headache just trying to think down to your level.",
+    #                         "This is the sort of thing you lifeforms enjoy, is it?")
+    #     menu.pack()
+    #
+    #     btn_save = tk.Button(window, text="Save", command=save)
+    #     btn_save.pack()
+    #
+    # def on_wait_btn_click(self):
+    #     def save():
+    #         args = []
+    #         args.append(variable.get())
+    #         cmd = WaitCommand(args)
+    #         self.commands.append(cmd)
+    #         self.boxes.append(self.boxes[-1]+90)
+    #         self.canvas.create_rectangle(self.boxes[-1], 130, self.boxes[-1]+80, 360, fill="DeepPink2", width=0)
+    #
+    #         window.destroy()
+    #
+    # def on_start_btn_click(self):
+    #     cmd_thrd = Thread(target=self.run_commands())
+    #     cmd_thrd.start()
+    #
+    #     self.clear()
+    #
+    # def clear(self):
+    #     self.commands = []
+    #     self.boxes = [0]
+    #     self.canvas.create_rectangle(90, 130, 800, 360, fill="light cyan", width=0)
+    #
+    # def run_commands(self):
+    #     for command in self.commands:
+    #         self.btn_start.flash()
+    #         command.run_command()
+    #
+    # def take_voice_command(self, command):
+    #     tokens = command.split(' ')
+    #     print("Taking Voice Command: ", tokens[0])
+    #
+    #     if "start" in tokens[0]:
+    #         for command in self.commands:
+    #             command.run_command()
+    #
+    #         self.commands = []
+    #         self.boxes = []
 
             args.append(pos)
 

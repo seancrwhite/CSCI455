@@ -3,21 +3,23 @@ from PhoneHandler import *
 
 class Player(Thread):
     def __init__(self, start_node):
-        self.health = 20
+        self.health = 25
         self.has_key = False
         self.curr_node = start_node
+        self.first_node = start_node
         self.server = ServerThread()
         self.client = ClientThread()
         self.result = ""
 
     def run(self):
+        print("befor execute" + self.result)
         self.result = self.curr_node.execute(self)
-        print("Run start", str(self.health))
+        print("after execute" + self.result)
 
         if self.health <= 0:
-            self.client.send(self.result)
             print("health depleated")
             return True
+
         self.result += "I see a path "
         if self.curr_node.adjacent_nodes[0]:
             self.result +="north "
@@ -28,12 +30,13 @@ class Player(Thread):
         if self.curr_node.adjacent_nodes[3]:
             self.result += "west "
 
+        print("before send" + self.result)
         self.client.send(self.result)
 
         curr_node_set = False
         while curr_node_set == False:
             data = ""
-
+            print("Before receiving")
             while data == "":
                 data = self.server.get_phrase()
 
@@ -52,7 +55,23 @@ class Player(Thread):
             elif data == "west" and self.curr_node.adjacent_nodes[3]:
                 self.curr_node = self.curr_node.adjacent_nodes[3]
                 curr_node_set = True
+            elif data == "stop":
+                return True
             else:
                 self.client.send("Invalid direction.")
-        print("Out of loop")
+        print("before false return" + self.result)
         return False
+
+    def play_again(self):
+        print(self.result)
+        self.result += " Would you like to play again?"
+        self.client.send(self.result)
+        data = ""
+        while data == "":
+            data = self.server.get_phrase()
+        data = data.lower().strip()
+        if data =="yes":
+            return True
+        else:
+            self.client.send("Game over")
+            return False

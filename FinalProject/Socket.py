@@ -1,7 +1,7 @@
 import socket
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = "10.200.0.206"
+host = "10.200.6.88"
 port = 5000
 
 sock.connect((host, port))
