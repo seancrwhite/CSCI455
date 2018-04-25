@@ -56,6 +56,7 @@ class Player(Thread):
                 self.curr_node = self.curr_node.adjacent_nodes[3]
                 curr_node_set = True
             elif data == "stop":
+                self.result = "You have quit the game. "
                 return True
             else:
                 self.client.send("Invalid direction.")
@@ -64,7 +65,7 @@ class Player(Thread):
 
     def play_again(self):
         print(self.result)
-        self.result += " Would you like to play again?"
+        self.result += "Would you like to play again?"
         self.client.send(self.result)
         data = ""
         while data == "":
