@@ -37,13 +37,18 @@ class ServerThread(Thread):
             try:
                 data = self.sock.recv(2048)
                 command = str(data, 'utf-8')
-                print("Recieved: ", command)
-                self.phrase = command
+                if self.phrase:
+                    #print("Recieved: ", command)
+                    self.phrase = command
             except:
                 print('Server disconnected')
                 self.sock.close()
                 break
 
     def get_phrase(self):
+        if self.phrase != "":
+            print("Current phrase: ", self.phrase)
+
         result, self.phrase = self.phrase, ""
+
         return result

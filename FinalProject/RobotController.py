@@ -1,9 +1,9 @@
-from Maestro import Controller
+#from Maestro import Controller
 from time import sleep
 
 class RobotController:
     def __init__(self):
-        self.controller = Controller()
+        #self.controller = Controller()
 
         self.body = 0
         self.motor_move = 1

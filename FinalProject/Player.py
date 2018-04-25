@@ -39,7 +39,7 @@ class Player(Thread):
             print("Before receiving")
             while data == "":
                 data = self.server.get_phrase()
-
+                
             data = data.lower().strip()
             print(data)
             if data == "north" and self.curr_node.adjacent_nodes[0]:

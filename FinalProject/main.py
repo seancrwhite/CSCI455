@@ -23,6 +23,7 @@ if __name__ == '__main__':
         while not game_over:
             game_over = new_player.run()
         cont = new_player.play_again()
+        #cont = False
 
     print("EXIT")
     sys.exit()
